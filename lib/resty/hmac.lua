@@ -147,8 +147,6 @@ end
 
 function _M.check_headers(self, service, id, dtype, message, delimiter, max_time_diff)
     local authorization  =  ngx.header.authorization
-    local method  =  ngx.req.get_method
-    local uri  =  ngx.var.request_uri
     local date2  =  ngx.header.date
     
     if not authorization or not method or not uri or not date2 then

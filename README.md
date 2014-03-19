@@ -1,7 +1,7 @@
 Name
 ====
 
-lua-resty-redis - Lua for making and receiving hmac signed requests
+lua-resty-redis - Lua library for making and receiving hmac signed requests
 
 Table of Contents
 =================
@@ -63,7 +63,7 @@ Synopsis
                 
                 res = ngx.location.capture(
                     "/upload/to/s3/",
-                    { method = ngx.HTTP_PUT, body = body.media,
+                    { method = ngx.HTTP_PUT, body = "Test Upload Content",
                       args = {date = headers.date, auth = headers.auth, file = destination}}
                 )
                 
@@ -133,15 +133,15 @@ In case of success, returns the signature. In case of errors, returns `nil` with
 
 check_signature
 ------------------
-`syntax: sig, err = hm:check_signature(dtype, message, delimiter, signature)`
+`syntax: ok, err = hm:check_signature(dtype, message, delimiter, signature)`
 
-`syntax: sig, err = hm:check_signature("sha1", "StringToSign", nil, "bo1h3498v3")`
+`syntax: ok, err = hm:check_signature("sha1", "StringToSign", nil, "bo1h3498v3")`
 
 Attempts to sign a message and compare it with a precomputed signature.
 
 ```
 local args = {"PUT","/path/to/file/","Wed, 19 Mar 2014 21:45:06 +0000"}
-local sig, err = hm:check_signature("sha1", args, nil, "bo1h3498v3")
+local ok, err = hm:check_signature("sha1", args, nil, "bo1h3498v3")
 ```
 
 In case of success, returns true. In case of errors, returns false with a string describing the error.
@@ -150,9 +150,9 @@ In case of success, returns true. In case of errors, returns false with a string
 
 generate_headers
 ------------------
-`syntax: sig, err = hm:generate_headers(service, id, dtype, message, delimiter)`
+`syntax: headers, err = hm:generate_headers(service, id, dtype, message, delimiter)`
 
-`syntax: sig, err = hm:generate_headers("AWS", "AccessKeyId", "sha1", "StringToSign")`
+`syntax: headers, err = hm:generate_headers("AWS", "AccessKeyId", "sha1", "StringToSign")`
 
 Attempts to generate the date and an authentication string for use in an auth header.
 
@@ -162,9 +162,9 @@ In case of success, returns a table {date = date, auth = auth}. In case of error
 
 check_headers
 ------------------
-`syntax: sig, err = hm:check_headers(service, id, dtype, message, delimiter, max_time_diff)`
+`syntax: ok, err = hm:check_headers(service, id, dtype, message, delimiter, max_time_diff)`
 
-`syntax: sig, err = hm:check_headers("AWS", "AccessKeyId", "sha1", "StringToSign")`
+`syntax: ok, err = hm:check_headers("AWS", "AccessKeyId", "sha1", "StringToSign")`
 
 Attempts to sign a message and compare request headers to computed headers.
 
