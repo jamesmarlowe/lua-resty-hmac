@@ -100,7 +100,7 @@ function _M.check_signature(self, dtype, message, delimiter, signature)
         return nil, "not initialized"
     end
     
-    local new_signature, err = self.generate_signature(dtype, message, delimiter)
+    local new_signature, err = self:generate_signature(dtype, message, delimiter)
     if not new_signature then
         return new_signature, err
     end
@@ -119,7 +119,7 @@ function _M.generate_headers(self, service, id, dtype, message, delimiter)
     
     local signature = self.signature
     if not signature then
-        signature, err = self.sign_message(dtype, message, delimiter)
+        signature, err = self:generate_signature(dtype, message, delimiter)
         if signature then
             self.signature = signature
         else
@@ -164,9 +164,9 @@ function _M.check_headers(self, service, id, dtype, message, delimiter, max_time
     month = months[month]
     
     local timestamp1  =  os.time()
-    local timestamp2  =  os.time({month = month,   year  =  year,
-                                  day   = day,     hour  =  hour,
-                                  min   = minute,  sec   =  second})
+    local timestamp2  =  os.time({month = month,   year = year,
+                                  day   = day,     hour = hour,
+                                  min   = minute,  sec  = second})
     
     if type(max_time_diff) ~= "number" then
         max_time_diff  =  300 -- 5 minutes
@@ -176,7 +176,7 @@ function _M.check_headers(self, service, id, dtype, message, delimiter, max_time
         return nil, "time difference too great"
     end
     
-    signature, err = self.check_signature(self, dtype, message, delimiter, req_signature)
+    signature, err = self:check_signature(self, dtype, message, delimiter, req_signature)
     if not signature then
         return signature, err
     end

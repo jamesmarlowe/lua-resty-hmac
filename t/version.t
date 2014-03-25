@@ -22,7 +22,26 @@ run_tests();
 
 __DATA__
 
-=== TEST 1: basic
+=== TEST 1: crypto version
+--- http_config eval: $::HttpConfig
+--- config
+    location /t {
+        content_by_lua '
+            local crypto = require "crypto"
+            local crypto_hmac = require("crypto.hmac")
+            ngx.say(crypto._VERSION)
+        ';
+    }
+--- request
+    GET /t
+--- response_body_like chop
+^\S+\ \d+\.\d+\.\d+$
+--- no_error_log
+[error]
+
+
+
+=== TEST 2: resty.hmac version
 --- http_config eval: $::HttpConfig
 --- config
     location /t {

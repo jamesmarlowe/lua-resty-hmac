@@ -31,7 +31,7 @@ __DATA__
             local hmac = require "resty.hmac"
             local hm = hmac:new("SigningKey")
 
-            local signature, err = hm:generate_signature("sha1",{"Asd","zxc","qwe"}, "|")
+            local signature, err = hm:generate_signature("sha1","Asd|zxc|qwe")
             if not signature then
                 ngx.say("failed to sign message: ", err)
                 return
@@ -43,7 +43,7 @@ __DATA__
 --- request
 GET /t
 --- response_body
-MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==
+Jk9+HAezinRE9cTmGVpdzcmA1WU=
 --- no_error_log
 [error]
 
@@ -56,20 +56,21 @@ MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==
         content_by_lua '
             local hmac = require "resty.hmac"
             local hm = hmac:new("SigningKey")
+            local StringToSign = "Asd|zxc|qwe"
 
-            local signature, err = hm:check_signature("sha1",{"Asd","zxc","qwe"}, "|", "MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==")
+            local signature, err = hm:check_signature("sha1",StringToSign, nil, "Jk9+HAezinRE9cTmGVpdzcmA1WU=")
             if not signature then
                 ngx.say("failed to sign message: ", err)
                 return
             end
             
-            ngx.say(signature)
+            ngx.say(err)
         ';
     }
 --- request
 GET /t
 --- response_body
-MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==
+signature matches
 --- no_error_log
 [error]
 
@@ -82,8 +83,9 @@ MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==
         content_by_lua '
             local hmac = require "resty.hmac"
             local hm = hmac:new("SigningKey")
+            local StringToSign = "Asd|zxc|qwe"
 
-            local headers, err = hm:generate_headers("AWS", "AccessKeyId", "sha1", "StringToSign")
+            local headers, err = hm:generate_headers("AWS", "AccessKeyId", "sha1", StringToSign)
             if not headers then
                 ngx.say("failed to sign message: ", err)
                 return
@@ -95,9 +97,8 @@ MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==
     }
 --- request
 GET /t
---- response_body
-^\a+, \d+ \a+ \d+ \d+:\d+:\d+$
-AWS AccessKeyId:MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==
+--- response_body_like chop
+^\S+, \d+ \S+ \d+ \d+:\d+:\d+ \+0000 AWS AccessKeyId\:Jk9\+HAezinRE9cTmGVpdzcmA1WU\=$
 --- no_error_log
 [error]
 
@@ -145,7 +146,7 @@ AWS AccessKeyId:MjY0ZjdlMWMwN2IzOGE3NDQ0ZjVjNGU2MTk1YTVkY2RjOTgwZDU2NQ==
             )
             
             if res.body then
-                ngx.say(resp.body)
+                ngx.say(res.body)
             else
                 ngx.say("failed")
             end
