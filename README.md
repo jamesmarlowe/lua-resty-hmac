@@ -1,7 +1,7 @@
 Name
 ====
 
-lua-resty-redis - Lua library for making and receiving hmac signed requests
+lua-resty-hmac - Lua library for making and receiving hmac signed requests
 
 Table of Contents
 =================
