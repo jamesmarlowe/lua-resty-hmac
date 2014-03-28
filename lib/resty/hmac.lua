@@ -177,7 +177,7 @@ function _M.check_headers(self, service, id, dtype, message, delimiter, max_time
         return nil, "time difference too great"
     end
     
-    signature, err = self:check_signature(self, dtype, message, delimiter, req_signature)
+    signature, err = self:check_signature(dtype, message, delimiter, req_signature)
     if not signature then
         return signature, err
     end

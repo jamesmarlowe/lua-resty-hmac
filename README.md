@@ -104,11 +104,11 @@ Synopsis
 Methods
 =======
 
-All of the commands return either something that evaluates to true on success and nil and an error message on failure.
+All of the commands return either something that evaluates to true on success, or `nil` and an error message on failure.
 
 new
 ---
-`syntax: hm, err = hmac:new("SigningKey")
+`syntax: hm, err = hmac:new("SigningKey")`
 
 Creates a signing object. In case of failures, returns `nil` and a string describing the error.
 
@@ -144,7 +144,7 @@ local args = {"PUT","/path/to/file/","Wed, 19 Mar 2014 21:45:06 +0000"}
 local ok, err = hm:check_signature("sha1", args, nil, "bo1h3498v3")
 ```
 
-In case of success, returns true. In case of errors, returns false with a string describing the error.
+In case of success, returns `true`. In case of errors, returns `false` with a string describing the error.
 
 [Back to TOC](#table-of-contents)
 
@@ -156,7 +156,7 @@ generate_headers
 
 Attempts to generate the date and an authentication string for use in an auth header.
 
-In case of success, returns a table {date = date, auth = auth}. In case of errors, returns nil with a string describing the error.
+In case of success, returns a table `{date = date, auth = auth}`. In case of errors, returns `nil` with a string describing the error.
 
 [Back to TOC](#table-of-contents)
 
@@ -168,7 +168,7 @@ check_headers
 
 Attempts to sign a message and compare request headers to computed headers.
 
-In case of success, returns true. In case of errors, returns nil with a string describing the error.
+In case of success, returns `true`. In case of errors, returns `nil` with a string describing the error.
 
 [Back to TOC](#table-of-contents)
 

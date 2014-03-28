@@ -115,9 +115,9 @@ GET /t
             local ok, err = hm:check_headers("MYSERVICE", "AccessKeyId", "sha1", StringToSign)
             
             if ok then
-                ngx.say("authentication complete")
+                ngx.print("authentication complete")
             else
-                ngx.say("authentication failed: ", err)
+                ngx.print("authentication failed: ", err)
             end
         ';
     }
