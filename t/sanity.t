@@ -98,7 +98,7 @@ signature matches
 --- request
 GET /t
 --- response_body_like chop
-^\S+, \d+ \S+ \d+ \d+:\d+:\d+ \+0000 AWS AccessKeyId\:Jk9\+HAezinRE9cTmGVpdzcmA1WU\=$
+^\S+, \d+ \S+ \d+ \d+:\d+:\d+ \+0000\nAWS AccessKeyId\:Jk9\+HAezinRE9cTmGVpdzcmA1WU\=$
 --- no_error_log
 [error]
 
@@ -117,7 +117,7 @@ GET /t
             if ok then
                 ngx.say("authentication complete")
             else
-                ngx.say("authentication failed")
+                ngx.say("authentication failed: ", err)
             end
         ';
     }
@@ -129,7 +129,7 @@ GET /t
         proxy_set_header Authorization $auth;
         proxy_pass_request_headers off;
 
-        proxy_pass http://localhost/v;
+        proxy_pass http://127.0.0.1:$server_port/v;
     }
     location /t {
         content_by_lua '
@@ -148,7 +148,7 @@ GET /t
             if res.body then
                 ngx.say(res.body)
             else
-                ngx.say("failed")
+                ngx.say("failed: ", err)
             end
         ';
     }
