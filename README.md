@@ -235,7 +235,7 @@ sudo cpan Test::Nginx
 mkdir -p ~/work 
 cd ~/work 
 git clone https://github.com/agentzh/test-nginx.git 
-cd /path/to/AdTrade-AdTrade/
+cd /path/to/lua-resty-hmac/
 make test #assumes openresty installed to /usr/bin/openresty/
 ```
 
