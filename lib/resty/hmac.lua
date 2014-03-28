@@ -146,10 +146,11 @@ end
 
 
 function _M.check_headers(self, service, id, dtype, message, delimiter, max_time_diff)
-    local authorization  =  ngx.header.authorization
-    local date2  =  ngx.header.date
+    local request_headers = ngx.req.get_headers()
+    local authorization = request_headers.authorization
+    local date2 = request_headers.date
     
-    if not authorization or not method or not uri or not date2 then
+    if not authorization or not date2 then
         return nil, "missing headers"
     end
     
