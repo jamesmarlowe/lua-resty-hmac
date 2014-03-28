@@ -22,6 +22,7 @@ Table of Contents
 * [Community](#community)
     * [English Mailing List](#english-mailing-list)
     * [Chinese Mailing List](#chinese-mailing-list)
+* [Testing](#testing)
 * [Bugs and Patches](#bugs-and-patches)
 * [Author](#author)
 * [Copyright and License](#copyright-and-license)
@@ -220,6 +221,23 @@ Chinese Mailing List
 --------------------
 
 The [openresty](https://groups.google.com/group/openresty) mailing list is for Chinese speakers.
+
+[Back to TOC](#table-of-contents)
+
+Testing
+=======
+
+Running the tests in t/ is simple once you know whats happening. They use perl's prove and agentzh's test-nginx.
+
+```
+sudo apt-get install perl build-essential curl
+sudo cpan Test::Nginx
+mkdir -p ~/work 
+cd ~/work 
+git clone https://github.com/agentzh/test-nginx.git 
+cd /path/to/AdTrade-AdTrade/
+make test #assumes openresty installed to /usr/bin/openresty/
+```
 
 [Back to TOC](#table-of-contents)
 
