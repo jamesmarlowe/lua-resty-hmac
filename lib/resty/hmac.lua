@@ -164,16 +164,18 @@ function _M.check_headers(self, service, id, dtype, message, delimiter, max_time
           date2:match("%a+, (%d+) (%a+) (%d+) (%d+):(%d+):(%d+)")
     month = months[month]
     
-    local timestamp1  =  os.time()
-    local timestamp2  =  os.time({month = month,   year = year,
-                                  day   = day,     hour = hour,
-                                  min   = minute,  sec  = second})
+    local date1 = os.date("!*t")
+    date1.isdst = nil
+    local timestamp1 = os.time(date1)
+    local timestamp2 = os.time({month = month,   year = year,
+                                day   = day,     hour = hour,
+                                min   = minute,  sec  = second})
     
     if type(max_time_diff) ~= "number" then
         max_time_diff  =  300 -- 5 minutes
     end
     
-    if timestamp2 - timestamp1 > max_time_diff then
+    if (timestamp2 - timestamp1) > max_time_diff then
         return nil, "time difference too great"
     end
     

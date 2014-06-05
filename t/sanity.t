@@ -136,7 +136,6 @@ GET /t
             local hmac = require "resty.hmac"
             local hm, err = hmac:new("SigningKey")
             local StringToSign = "Asd|zxc|qwe"
-            local date = os.date("!%a, %d %b %Y %H:%M:%S +0000")
             local headers, err = hm:generate_headers("MYSERVICE", "AccessKeyId", "sha1", StringToSign)
         
             res = ngx.location.capture(
