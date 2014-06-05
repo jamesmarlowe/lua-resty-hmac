@@ -135,7 +135,7 @@ function _M.generate_headers(self, service, id, dtype, message, delimiter)
         return nil, "no id provided"
     end
     
-    local date = os.date("%a, %d %b %Y %H:%M:%S +0000")
+    local date = os.date("!%a, %d %b %Y %H:%M:%S +0000")
     local auth = service.." "..id..":"..signature
     
     self.date = date

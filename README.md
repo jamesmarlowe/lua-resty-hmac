@@ -50,7 +50,7 @@ Synopsis
                 local hmac = require "resty.hmac"
                 local hm, err = hmac:new("SigningKey")
                 
-                local date = os.date("%a, %d %b %Y %H:%M:%S +0000")
+                local date = os.date("!%a, %d %b %Y %H:%M:%S +0000")
                 local destination = "/path/to/new/file.txt"
                 local StringToSign = "PUT"..string.char(10)..string.char(10)..string.char(10)..date..string.char(10)..destination
                 
