@@ -6,6 +6,9 @@ MAINTAINER James Marlowe <jameskmarlowe@gmail.com>
 RUN apt-get -qq update
 RUN apt-get -qqy upgrade
 
+# install system reqs
+RUN apt-get -y install nginx libpq-dev make wget
+
 # install openresty
 RUN wget http://openresty.org/download/ngx_openresty-1.5.12.1.tar.gz
 RUN tar xzvf ngx_openresty-1.5.12.1.tar.gz 
