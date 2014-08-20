@@ -123,7 +123,7 @@ function _M.generate_headers(self, service, id, dtype, message, delimiter)
         if signature then
             self.signature = signature
         else
-            return signature, err
+            return nil, err
         end
     end
     
