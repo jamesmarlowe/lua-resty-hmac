@@ -37,7 +37,7 @@ _M._VERSION = '0.01'
 
 
 local hash_algorithms = {
-    md5 = 1, md4 = 1, md2 = 1, sha1 = 1, sha = 1, mdc2 = 1, ripemd160 = 1
+    md5 = 1, md4 = 1, md2 = 1, sha1 = 1, sha = 1, sha256 = 1, mdc2 = 1, ripemd160 = 1
 }
 
 
