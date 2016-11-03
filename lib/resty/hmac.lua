@@ -74,6 +74,7 @@ function _M.generate_signature(self, dtype, message, delimiter)
     local StringToSign = ""
     
     if type(message) == "table" then
+        table.sort(message)
         for k, v in pairs(message) do
             StringToSign = StringToSign..v..(k ~= #message and delimiter or "")
         end
