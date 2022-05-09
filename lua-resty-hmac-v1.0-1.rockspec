@@ -2,7 +2,7 @@ package = "lua-resty-hmac"
 version = "v1.0-1"
 
 source = {
-  url = "git://github.com/jamesmarlowe/lua-resty-hmac.git"
+  url = "https://github.com/jamesmarlowe/lua-resty-hmac.git"
 }
 
 description = {
